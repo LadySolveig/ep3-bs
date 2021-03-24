@@ -10,3 +10,12 @@ Desktop.ini
 Thumbs.db
 
 .DS_Store
+
+composer.lock
+config/autoload/local.php.dist
+config/autoload/local
+config/init.php.dist
+config/init.php
+public/.htaccess_original
+public/imgs-client/layout/logo.png
+public/setup.php.bak

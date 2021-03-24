@@ -39,3 +39,28 @@ a.cc-conflict:hover { background-color: #334F6A; }
 /* Links */
 
 a:link, a:visited { color: #334F6A; }
+
+/* Logo*/
+#logo {
+    width: 149px;
+}
+
+#branding {
+    text-indent: 213px;
+}
+
+#label-client {
+    font-size: 26px;
+}
+
+#label-service, #label-client {
+    text-indent: 182px;
+}
+
+/* Print */
+
+@media print
+{
+    
+}
+

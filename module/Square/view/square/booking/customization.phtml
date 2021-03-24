@@ -25,13 +25,13 @@ echo $this->ajaxAwareScript('js/controller/square/booking/customization.min.js')
 
     <?= sprintf('<p><span class="green">' . $this->t('You are going to book this %s.') . '</span></p>', $squareType) ?>
 
-    <div class="separator separator-line"></div>
+    <!--<div class="separator separator-line"></div>-->
 
-    <div class="sandbox">
+    <div class="sandbox" style="display: none;">
         <?= $this->squareQuantityChoice($square, $this->bookings) ?>
     </div>
 
-    <div class="separator separator-line"></div>
+    <!--<div class="separator separator-line"></div>-->
 
     <?php
 
