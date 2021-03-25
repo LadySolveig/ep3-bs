@@ -5,7 +5,42 @@ $squareType = $this->option('subject.square.type');
 if ($this->notBookableReason) {
     $reason = $this->notBookableReason;
 } else {
+	$outputPlayerNames = null;
+    if ($user !== null) {
+        // Mitspieler holen
+        foreach ($bookings as $booking) {
+            $reservationOwner = $booking->getExtra('user')->get('alias');
+            if ($outputPlayerNames === null) {
+                $outputPlayerNames = $reservationOwner;
+            } else {
+                $outputPlayerNames .= sprintf(', %1$s', $reservationOwner);
+            }
+            
+            $playerNames = $booking->getMeta('player-names');
+            if ($playerNames) {
+                $playerNames = @unserialize($playerNames);
+                if ($playerNames) {
+                    foreach ($playerNames as $playerData) {
+                        $nameData = trim($playerData['value']);
+                        if ($nameData !== "") {
+                            if ($outputPlayerNames === null) {
+                                $outputPlayerNames = $nameData;
+                            } else {
+                                $outputPlayerNames .= sprintf(', %1$s', $nameData);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }	
+
     $reason = $this->t('This %s is already occupied.');
+
+	if ($outputPlayerNames != null) {
+        $reason .= sprintf('<br />(%1$s)', $outputPlayerNames);
+    }														   
+	 
 }
 
 echo sprintf('<p><span class="red">' . $reason . '</span></p>', $squareType);
