@@ -12,6 +12,7 @@
         <link type="text/css" rel="stylesheet" href="<?= $this->basePath('css/jquery-ui/jquery-ui.min.css') ?>" media="all">
         <link type="text/css" rel="stylesheet" href="<?= $this->basePath('css/default.min.css') ?>" media="all">
         <link type="text/css" rel="stylesheet" href="<?= $this->basePath('css-client/default.css') ?>" media="all">
+        <link rel="manifest" href="<?=  $this->basePath('manifest.json') ?>" media="all">
         <?= $this->headLink() ?>
         <?= $this->headTitle($this->option(['client.name.full', 'service.name.short']))->setSeparator(' &middot; ')->setAutoEscape(false) ?>
     </head>
@@ -56,5 +57,12 @@
         <script type="text/javascript" src="<?= $this->basePath('js/jquery-ui/jquery-ui.min.js') ?>"></script>
         <script type="text/javascript" src="<?= $this->basePath('js/default.min.js') ?>"></script>
         <?= $this->headScript() ?>
+        <script>
+            window.addEventListener("load", () => {
+                if ("serviceWorker" in navigator) {
+                  navigator.serviceWorker.register("<?= $this->basePath('js-client/service-worker.js') ?>");
+                }
+              });
+        </script>
     </body>
 </html>

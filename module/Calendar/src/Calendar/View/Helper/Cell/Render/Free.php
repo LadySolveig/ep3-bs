@@ -23,10 +23,12 @@ class Free extends AbstractHelper
 
                 return $view->calendarCellLink($cellLabel, $view->url('square', [], $cellLinkParams), 'cc-own' . $cellGroup);
             } else {
-                return $view->calendarCellLink($labelFree, $view->url('square', [], $cellLinkParams), 'cc-free');
+                return $view->calendarCellRenderFreeForAll($reservations, $cellLinkParams, $square, $user);
+//                return $view->calendarCellLink($labelFree, $view->url('square', [], $cellLinkParams), 'cc-free');
             }
         } else {
-            return $view->calendarCellLink($labelFree, $view->url('square', [], $cellLinkParams), 'cc-free');
+            return $view->calendarCellRenderFreeForAll($reservations, $cellLinkParams, $square);
+//            return $view->calendarCellLink($labelFree, $view->url('square', [], $cellLinkParams), 'cc-free');
         }
     }
 

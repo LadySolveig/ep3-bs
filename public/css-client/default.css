@@ -57,6 +57,11 @@ a:link, a:visited { color: #334F6A; }
     text-indent: 182px;
 }
 
+.symbolic-alias {
+    padding-left: 19px;
+    background-image: url(../imgs/icons/user.png);
+}
+
 /* Print */
 
 @media print

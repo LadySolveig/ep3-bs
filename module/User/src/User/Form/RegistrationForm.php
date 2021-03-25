@@ -107,7 +107,7 @@ class RegistrationForm extends Form
             'type' => 'Text',
             'attributes' => array(
                 'id' => 'rf-firstname',
-                'style' => 'width: 116px;',
+                'style' => 'width: 150px;',
             ),
             'options' => array(
                 'label' => 'First & Last name',
@@ -119,73 +119,73 @@ class RegistrationForm extends Form
             'type' => 'Text',
             'attributes' => array(
                 'id' => 'rf-lastname',
-                'style' => 'width: 116px;',
+                'style' => 'width: 182px;',
             ),
             'options' => array(
                 'label' => 'Last name',
             ),
         ));
 
-        $this->add(array(
-            'name' => 'rf-street',
-            'type' => 'Text',
-            'attributes' => array(
-                'id' => 'rf-street',
-                'style' => 'width: 182px;',
-            ),
-            'options' => array(
-                'label' => 'Street & Number',
-            ),
-        ));
-
-        $this->add(array(
-            'name' => 'rf-number',
-            'type' => 'Text',
-            'attributes' => array(
-                'id' => 'rf-number',
-                'style' => 'width: 50px;',
-            ),
-            'options' => array(
-                'label' => 'Street number',
-            ),
-        ));
-
-        $this->add(array(
-            'name' => 'rf-zip',
-            'type' => 'Text',
-            'attributes' => array(
-                'id' => 'rf-zip',
-                'style' => 'width: 116px;',
-            ),
-            'options' => array(
-                'label' => 'Postal code & City',
-            ),
-        ));
-
-        $this->add(array(
-            'name' => 'rf-city',
-            'type' => 'Text',
-            'attributes' => array(
-                'id' => 'rf-city',
-                'style' => 'width: 116px;',
-            ),
-            'options' => array(
-                'label' => 'City',
-            ),
-        ));
-
-        $this->add(array(
-            'name' => 'rf-phone',
-            'type' => 'Text',
-            'attributes' => array(
-                'id' => 'rf-phone',
-                'style' => 'width: 250px;',
-            ),
-            'options' => array(
-                'label' => 'Phone number',
-                'notes' => 'We only use this to inform you<br>about changes to your bookings',
-            ),
-        ));
+//        $this->add(array(
+//            'name' => 'rf-street',
+//            'type' => 'Text',
+//            'attributes' => array(
+//                'id' => 'rf-street',
+//                'style' => 'width: 182px;',
+//            ),
+//            'options' => array(
+//                'label' => 'Street & Number',
+//            ),
+//        ));
+//
+//        $this->add(array(
+//            'name' => 'rf-number',
+//            'type' => 'Text',
+//            'attributes' => array(
+//                'id' => 'rf-number',
+//                'style' => 'width: 50px;',
+//            ),
+//            'options' => array(
+//                'label' => 'Street number',
+//            ),
+//        ));
+//
+//        $this->add(array(
+//            'name' => 'rf-zip',
+//            'type' => 'Text',
+//            'attributes' => array(
+//                'id' => 'rf-zip',
+//                'style' => 'width: 116px;',
+//            ),
+//            'options' => array(
+//                'label' => 'Postal code & City',
+//            ),
+//        ));
+//
+//        $this->add(array(
+//            'name' => 'rf-city',
+//            'type' => 'Text',
+//            'attributes' => array(
+//                'id' => 'rf-city',
+//                'style' => 'width: 116px;',
+//            ),
+//            'options' => array(
+//                'label' => 'City',
+//            ),
+//        ));
+//
+//        $this->add(array(
+//            'name' => 'rf-phone',
+//            'type' => 'Text',
+//            'attributes' => array(
+//                'id' => 'rf-phone',
+//                'style' => 'width: 250px;',
+//            ),
+//            'options' => array(
+//                'label' => 'Phone number',
+//                'notes' => 'We only use this to inform you<br>about changes to your bookings',
+//            ),
+//        ));
 
         /*
          * Optional birthdate input not allowed anymore by EU GDPR
@@ -455,134 +455,134 @@ class RegistrationForm extends Form
                     ),
                 ),
             ),
-            'rf-street' => array(
-                'filters' => array(
-                    array('name' => 'StringTrim'),
-                    array('name' => 'Callback', 'options' => array('callback' => function($name) { return ucfirst($name); })),
-                ),
-                'validators' => array(
-                    array(
-                        'name' => 'NotEmpty',
-                        'options' => array(
-                            'message' => 'Please type your street name here',
-                        ),
-                        'break_chain_on_failure' => true,
-                    ),
-                    array(
-                        'name' => 'StringLength',
-                        'options' => array(
-                            'min' => 2,
-                            'message' => 'This street name is somewhat short ...',
-                        ),
-                    ),
-                    array(
-                        'name' => 'Regex',
-                        'options' => array(
-                            'pattern' => '/^([ \.\'\-\x{00c0}-\x{01ff}a-zA-Z0-9])+$/u',
-                            'message' => 'This street name contains invalid characters - sorry',
-                        ),
-                    ),
-                ),
-            ),
-            'rf-number' => array(
-                'filters' => array(
-                    array('name' => 'StringTrim'),
-                ),
-                'validators' => array(
-                    array(
-                        'name' => 'NotEmpty',
-                        'options' => array(
-                            'message' => 'Please type your street number here',
-                        ),
-                        'break_chain_on_failure' => true,
-                    ),
-                    array(
-                        'name' => 'Regex',
-                        'options' => array(
-                            'pattern' => '/^([0-9a-zA-Z\.\-\/])+$/u',
-                            'message' => 'This street number contains invalid characters - sorry',
-                        ),
-                    ),
-                ),
-            ),
-            'rf-zip' => array(
-                'filters' => array(
-                    array('name' => 'StringTrim'),
-                ),
-                'validators' => array(
-                    array(
-                        'name' => 'NotEmpty',
-                        'options' => array(
-                            'message' => 'Please type your postal code here',
-                        ),
-                        'break_chain_on_failure' => true,
-                    ),
-                    array(
-                        'name' => 'Regex',
-                        'options' => array(
-                            'pattern' => '/^[0-9]{4,6}$/',
-                            'message' => 'Please provide a correct postal code',
-                        ),
-                    ),
-                ),
-            ),
-            'rf-city' => array(
-                'filters' => array(
-                    array('name' => 'StringTrim'),
-                    array('name' => 'Callback', 'options' => array('callback' => function($name) { return ucfirst($name); })),
-                ),
-                'validators' => array(
-                    array(
-                        'name' => 'NotEmpty',
-                        'options' => array(
-                            'message' => 'Please type your city here',
-                        ),
-                        'break_chain_on_failure' => true,
-                    ),
-                    array(
-                        'name' => 'StringLength',
-                        'options' => array(
-                            'min' => 3,
-                            'message' => 'This city name is somewhat short ...',
-                        ),
-                    ),
-                    array(
-                        'name' => 'Regex',
-                        'options' => array(
-                            'pattern' => '/^([ \&\'\(\)\.\-\x{00c0}-\x{01ff}a-zA-Z])+$/u',
-                            'message' => 'This city name contains invalid characters - sorry',
-                        ),
-                    ),
-                ),
-            ),
-            'rf-phone' => array(
-                'filters' => array(
-                    array('name' => 'StringTrim'),
-                ),
-                'validators' => array(
-                    array(
-                        'name' => 'NotEmpty',
-                        'options' => array(
-                            'message' => 'Please type your phone number here',
-                        ),
-                        'break_chain_on_failure' => true,
-                    ),
-                    array(
-                        'name' => 'StringLength',
-                        'options' => array(
-                            'min' => 3,
-                            'message' => 'This phone number is somewhat short ...',
-                        ),
-                    ),
-                    array(
-                        'name' => 'Regex',
-                        'options' => array(
-                            'pattern' => '/^([ \+\/\(\)\-0-9])+$/u',
-                            'message' => 'This phone number contains invalid characters - sorry',
-                        ),
-                    ),
-                ),
-            ),
+//            'rf-street' => array(
+//                'filters' => array(
+//                    array('name' => 'StringTrim'),
+//                    array('name' => 'Callback', 'options' => array('callback' => function($name) { return ucfirst($name); })),
+//                ),
+//                'validators' => array(
+//                    array(
+//                        'name' => 'NotEmpty',
+//                        'options' => array(
+//                            'message' => 'Please type your street name here',
+//                        ),
+//                        'break_chain_on_failure' => true,
+//                    ),
+//                    array(
+//                        'name' => 'StringLength',
+//                        'options' => array(
+//                            'min' => 2,
+//                            'message' => 'This street name is somewhat short ...',
+//                        ),
+//                    ),
+//                    array(
+//                        'name' => 'Regex',
+//                        'options' => array(
+//                            'pattern' => '/^([ \.\'\-\x{00c0}-\x{01ff}a-zA-Z0-9])+$/u',
+//                            'message' => 'This street name contains invalid characters - sorry',
+//                        ),
+//                    ),
+//                ),
+//            ),
+//            'rf-number' => array(
+//                'filters' => array(
+//                    array('name' => 'StringTrim'),
+//                ),
+//                'validators' => array(
+//                    array(
+//                        'name' => 'NotEmpty',
+//                        'options' => array(
+//                            'message' => 'Please type your street number here',
+//                        ),
+//                        'break_chain_on_failure' => true,
+//                    ),
+//                    array(
+//                        'name' => 'Regex',
+//                        'options' => array(
+//                            'pattern' => '/^([0-9a-zA-Z\.\-\/])+$/u',
+//                            'message' => 'This street number contains invalid characters - sorry',
+//                        ),
+//                    ),
+//                ),
+//            ),
+//            'rf-zip' => array(
+//                'filters' => array(
+//                    array('name' => 'StringTrim'),
+//                ),
+//                'validators' => array(
+//                    array(
+//                        'name' => 'NotEmpty',
+//                        'options' => array(
+//                            'message' => 'Please type your postal code here',
+//                        ),
+//                        'break_chain_on_failure' => true,
+//                    ),
+//                    array(
+//                        'name' => 'Regex',
+//                        'options' => array(
+//                            'pattern' => '/^[0-9]{4,6}$/',
+//                            'message' => 'Please provide a correct postal code',
+//                        ),
+//                    ),
+//                ),
+//            ),
+//            'rf-city' => array(
+//                'filters' => array(
+//                    array('name' => 'StringTrim'),
+//                    array('name' => 'Callback', 'options' => array('callback' => function($name) { return ucfirst($name); })),
+//                ),
+//                'validators' => array(
+//                    array(
+//                        'name' => 'NotEmpty',
+//                        'options' => array(
+//                            'message' => 'Please type your city here',
+//                        ),
+//                        'break_chain_on_failure' => true,
+//                    ),
+//                    array(
+//                        'name' => 'StringLength',
+//                        'options' => array(
+//                            'min' => 3,
+//                            'message' => 'This city name is somewhat short ...',
+//                        ),
+//                    ),
+//                    array(
+//                        'name' => 'Regex',
+//                        'options' => array(
+//                            'pattern' => '/^([ \&\'\(\)\.\-\x{00c0}-\x{01ff}a-zA-Z])+$/u',
+//                            'message' => 'This city name contains invalid characters - sorry',
+//                        ),
+//                    ),
+//                ),
+//            ),
+//            'rf-phone' => array(
+//                'filters' => array(
+//                    array('name' => 'StringTrim'),
+//                ),
+//                'validators' => array(
+//                    array(
+//                        'name' => 'NotEmpty',
+//                        'options' => array(
+//                            'message' => 'Please type your phone number here',
+//                        ),
+//                        'break_chain_on_failure' => true,
+//                    ),
+//                    array(
+//                        'name' => 'StringLength',
+//                        'options' => array(
+//                            'min' => 3,
+//                            'message' => 'This phone number is somewhat short ...',
+//                        ),
+//                    ),
+//                    array(
+//                        'name' => 'Regex',
+//                        'options' => array(
+//                            'pattern' => '/^([ \+\/\(\)\-0-9])+$/u',
+//                            'message' => 'This phone number contains invalid characters - sorry',
+//                        ),
+//                    ),
+//                ),
+//            ),
             /*
             'rf-birthdate' => array(
                 'required' => true,

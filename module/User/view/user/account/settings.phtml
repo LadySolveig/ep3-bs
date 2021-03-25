@@ -26,6 +26,7 @@ $this->headScript()->appendFile($this->basePath('js/controller/user/settings.min
         .symbolic-email { padding-left: 32px; background-position: 4px 3px; }
         .symbolic-pw { padding-left: 32px; background-position: 8px 2px; }
         .symbolic-phone { padding-left: 32px; background-position: 5px 0px; }
+        .symbolic-alias { padding-left: 32px; background-position: 5px 0px; }
         .symbolic-cross { padding-left: 32px; background-position: 5px 1px; }
 
         .dark-gray { color: #666; }
@@ -75,18 +76,56 @@ $this->headScript()->appendFile($this->basePath('js/controller/user/settings.min
 
     <div class="separator-small"></div>
 
-    <div class="sandbox">
-        <div class="symbolic symbolic-phone">
-            <div class="edit-label dark-gray"><?= $this->t('Update phone number') ?></div>
+<!--     <div class="sandbox">
+       <div class="symbolic symbolic-phone">
+            <div class="edit-label dark-gray"><?php // $this->t('Update phone number') ?></div>
 
             <div class="edit-panel">
                 <div class="separator-small"></div>
 
                 <?php
 
-                $form = $this->editPhoneForm;
+//                $form = $this->editPhoneForm;
+//                $form->setAttribute('method', 'post');
+//                $form->setAttribute('action', $this->url('user/settings', array(), array('query' => array('edit' => 'phone'))));
+//                $form->prepare();
+//
+//                echo $this->form()->openTag($form);
+
+                ?>
+
+                <table class="default-table" style="margin: 0px;">
+                    <tr>
+                        <td>
+                            <?php // $this->formElement($form->get('epf-phone')) ?>
+                            <?php // $this->formElementErrors($form->get('epf-phone')) ?>
+                            <?php // $this->formElementNotes($form->get('epf-phone')) ?>
+                        </td>
+                        <td>
+                            <?php // $this->formElement($form->get('epf-submit')) ?>
+                        </td>
+                    </tr>
+                </table>
+
+                <?php // $this->form()->closeTag() ?>
+            </div>
+        </div>
+    </div>
+
+    <div class="separator-small"></div>-->
+    
+     <div class="sandbox">
+       <div class="symbolic symbolic-alias">
+            <div class="edit-label dark-gray">Alias ändern</div>
+
+            <div class="edit-panel">
+                <div class="separator-small"></div>
+
+                <?php
+
+                $form = $this->editAliasForm;
                 $form->setAttribute('method', 'post');
-                $form->setAttribute('action', $this->url('user/settings', array(), array('query' => array('edit' => 'phone'))));
+                $form->setAttribute('action', $this->url('user/settings', array(), array('query' => array('edit' => 'alias'))));
                 $form->prepare();
 
                 echo $this->form()->openTag($form);
@@ -96,9 +135,9 @@ $this->headScript()->appendFile($this->basePath('js/controller/user/settings.min
                 <table class="default-table" style="margin: 0px;">
                     <tr>
                         <td>
-                            <?= $this->formElement($form->get('epf-phone')) ?>
-                            <?= $this->formElementErrors($form->get('epf-phone')) ?>
-                            <?= $this->formElementNotes($form->get('epf-phone')) ?>
+                            <?= $this->formElement($form->get('epf-alias')) ?>
+                            <?= $this->formElementErrors($form->get('epf-alias')) ?>
+                            <?= $this->formElementNotes($form->get('epf-alias')) ?>
                         </td>
                         <td>
                             <?= $this->formElement($form->get('epf-submit')) ?>
@@ -121,7 +160,7 @@ $this->headScript()->appendFile($this->basePath('js/controller/user/settings.min
                 <div class="separator-small"></div>
 
                 <?php if ($this->option('service.user.activation') == 'email'): ?>
-                    <p class="dark-gray"><?= $this->t('Note: You need to activate your account again if you update your email address.') ?></p>
+                    <p class="dark-gray"><?php // $this->t('Note: You need to activate your account again if you update your email address.') ?></p>
                 <?php endif; ?>
 
                 <?php

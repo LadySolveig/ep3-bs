@@ -43,6 +43,7 @@ return array(
             'CalendarCellRenderEventConflict' => 'Calendar\View\Helper\Cell\Render\EventConflict',
             'CalendarCellRenderEventForPrivileged' => 'Calendar\View\Helper\Cell\Render\EventForPrivileged',
             'CalendarCellRenderFree' => 'Calendar\View\Helper\Cell\Render\Free',
+            'CalendarCellRenderFreeForAll' => 'Calendar\View\Helper\Cell\Render\FreeForAll',
             'CalendarCellRenderFreeForPrivileged' => 'Calendar\View\Helper\Cell\Render\FreeForPrivileged',
             'CalendarCellRenderOccupied' => 'Calendar\View\Helper\Cell\Render\Occupied',
             'CalendarCellRenderOccupiedForVisitors' => 'Calendar\View\Helper\Cell\Render\OccupiedForVisitors',

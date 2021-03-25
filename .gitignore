@@ -19,3 +19,4 @@ config/init.php
 public/.htaccess_original
 public/imgs-client/layout/logo.png
 public/setup.php.bak
+manifest.json

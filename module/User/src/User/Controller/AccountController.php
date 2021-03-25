@@ -154,7 +154,7 @@ class AccountController extends AbstractActionController
                     $meta['firstname'] = ucfirst($registrationData['rf-firstname']);
                     $meta['lastname'] = ucfirst($registrationData['rf-lastname']);
 
-                    $alias = $meta['firstname'] . ' ' . $meta['lastname'];
+                    $alias = $meta['firstname'];
                 } else {
                     $meta['name'] = $registrationData['rf-firstname'];
 
@@ -450,6 +450,31 @@ class AccountController extends AbstractActionController
         } else {
             $editPhoneForm->get('epf-phone')->setValue($user->getMeta('phone'));
         }
+        
+        /* Alias form */
+
+        $editAliasForm = $formElementManager->get('User\Form\EditAliasForm');
+
+        if ($this->getRequest()->isPost() && $editParam == 'alias') {
+            $editAliasForm->setData($this->params()->fromPost());
+
+            if ($editAliasForm->isValid()) {
+                $data = $editAliasForm->getData();
+
+                $alias = $data['epf-alias'];
+
+                $user->set('alias', $alias);
+//                $user->setMeta('alias', $alias);
+                $userManager->save($user);
+
+                $this->flashMessenger()->addSuccessMessage(sprintf($this->t('Your %salias%s has been updated'),
+                    '<b>', '</b>'));
+
+                return $this->redirect()->toRoute('user/settings');
+            }
+        } else {
+            $editAliasForm->get('epf-alias')->setValue($user->need('alias'));
+        }
 
         /* Email form */
 
@@ -596,6 +621,7 @@ class AccountController extends AbstractActionController
         return array(
             'user' => $user,
             'editPhoneForm' => $editPhoneForm,
+            'editAliasForm' => $editAliasForm,
             'editEmailForm' => $editEmailForm,
             'editNotificationsForm' => $editNotificationsForm,
             'editPasswordForm' => $editPasswordForm,
