@@ -17,12 +17,18 @@ class Occupied extends AbstractHelper
         } else if ($user) {
             if ($userBooking) {
                 $cellLabel = $view->t('Your Booking');
-                $cellGroup = ' cc-group-' . $userBooking->need('bid');
-
-                return $view->calendarCellLink($cellLabel, $view->url('square', [], $cellLinkParams), 'cc-own' . $cellGroup);
+                $cellGroup = ' cc-own cc-group-' . $userBooking->need('bid'); 
             } else {
-                return $view->calendarCellRenderOccupiedForVisitors($reservations, $cellLinkParams, $square, $user);
+                $cellLabel = $this->view->t('Occupied');
+                $cellGroup = ' cc-single';
             }
+            if (count($reservations) > 0 && ($square->getMeta('public_names', 'false') == 'true' || $square->getMeta('private_names', 'false') == 'true' && $user)) {
+                foreach ($reservations as $reservation) {
+                   $booking = $reservation->needExtra('booking'); 
+                   $cellLabel .= (!$userBooking || ($booking->get('uid') != $user->get('uid'))) ? ' * ' . $booking->needExtra('user')->need('alias') :'';
+                }
+            }
+            return $view->calendarCellLink($cellLabel, $view->url('square', [], $cellLinkParams), $cellGroup);
         } else {
             return $view->calendarCellRenderOccupiedForVisitors($reservations, $cellLinkParams, $square);
         }

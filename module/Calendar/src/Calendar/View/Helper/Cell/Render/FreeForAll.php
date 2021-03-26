@@ -23,23 +23,23 @@ class FreeForAll extends AbstractHelper
 
                     $cellGroup = ' cc-group-' . $booking->need('bid');
 
+            $cellLabel = $this->view->t('Free');
             if ($square->getMeta('public_names', 'false') == 'true') {
-                $cellLabel = $booking->needExtra('user')->need('alias');
+                $cellLabel .= ' * ' . $booking->needExtra('user')->need('alias');
             } else if ($square->getMeta('private_names', 'false') == 'true' && $user) {
-                $cellLabel = $booking->needExtra('user')->need('alias');
-            } else {
-                $cellLabel = null;
-            }
-
-                    if (! $cellLabel) {
-                            $cellLabel = $this->view->t('Free');
-            }		
+                $cellLabel .= ' * ' . $booking->needExtra('user')->need('alias');
+            }	
 
             return $view->calendarCellLink($cellLabel, $view->url('square', [], $cellLinkParams), 'cc-free cc-free-partially' . $cellGroup);
         } else {
-            $labelFree = $square->getMeta('label.free', 'Still free');
-
-            return $view->calendarCellLink($labelFree, $view->url('square', [], $cellLinkParams), 'cc-free cc-free-partially');
+            $cellLabel = $this->view->t('Free');
+            if (count($reservations) > 0 && ($square->getMeta('public_names', 'false') == 'true' || $square->getMeta('private_names', 'false') == 'true' && $user)) {
+                foreach ($reservations as $reservation) {
+                   $booking = $reservation->needExtra('booking'); 
+                   $cellLabel .= ' * ' . $booking->needExtra('user')->need('alias');
+                }
+            } 
+            return $view->calendarCellLink($cellLabel, $view->url('square', [], $cellLinkParams), 'cc-free cc-free-partially');
         }
     }
 }

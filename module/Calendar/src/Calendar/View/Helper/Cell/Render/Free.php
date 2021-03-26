@@ -18,8 +18,14 @@ class Free extends AbstractHelper
             return $view->calendarCellRenderFreeForPrivileged($reservations, $cellLinkParams, $square);
         } else if ($user) {
             if ($userBooking) {
-                $cellLabel = $view->t('Your Booking');
+                $cellLabel = $view->t('Your Booking');                
                 $cellGroup = ' cc-group-' . $userBooking->need('bid');
+                if (count($reservations) > 0 && ($square->getMeta('public_names', 'false') == 'true' || $square->getMeta('private_names', 'false') == 'true' && $user)) {
+                    foreach ($reservations as $reservation) {
+                       $booking = $reservation->needExtra('booking'); 
+                       $cellLabel .= ($booking->get('uid') != $user->get('uid')) ? ' * ' . $booking->needExtra('user')->need('alias') : '';
+                    }
+                }
 
                 return $view->calendarCellLink($cellLabel, $view->url('square', [], $cellLinkParams), 'cc-own' . $cellGroup);
             } else {
