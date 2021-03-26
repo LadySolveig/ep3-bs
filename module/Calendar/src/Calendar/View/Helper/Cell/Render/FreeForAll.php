@@ -21,25 +21,30 @@ class FreeForAll extends AbstractHelper
             $reservation = current($reservations);
             $booking = $reservation->needExtra('booking');
 
-                    $cellGroup = ' cc-group-' . $booking->need('bid');
+            $cellGroup = ' cc-group-' . $booking->need('bid');
+            $ccNote = '';
 
             $cellLabel = $this->view->t('Free');
             if ($square->getMeta('public_names', 'false') == 'true') {
+                $cellLabel .= ' * ' . $booking->needExtra('user')->need('alias'); 
+                $ccNote = (empty($note = $booking->getMeta('notes')) || trim($note) === 'Anmerkungen des Benutzers:') ? '' : ' cc-note';
+            } elseif ($square->getMeta('private_names', 'false') == 'true' && $user) {
                 $cellLabel .= ' * ' . $booking->needExtra('user')->need('alias');
-            } else if ($square->getMeta('private_names', 'false') == 'true' && $user) {
-                $cellLabel .= ' * ' . $booking->needExtra('user')->need('alias');
+                $ccNote = (empty($note = $booking->getMeta('notes')) || trim($note) === 'Anmerkungen des Benutzers:') ? '' : ' cc-note';
             }	
 
-            return $view->calendarCellLink($cellLabel, $view->url('square', [], $cellLinkParams), 'cc-free cc-free-partially' . $cellGroup);
+            return $view->calendarCellLink($cellLabel, $view->url('square', [], $cellLinkParams), 'cc-free cc-free-partially' . $cellGroup . $ccNote);
         } else {
             $cellLabel = $this->view->t('Free');
+            $ccNote = '';
             if (count($reservations) > 0 && ($square->getMeta('public_names', 'false') == 'true' || $square->getMeta('private_names', 'false') == 'true' && $user)) {
                 foreach ($reservations as $reservation) {
                    $booking = $reservation->needExtra('booking'); 
                    $cellLabel .= ' * ' . $booking->needExtra('user')->need('alias');
+                   $ccNote = ((empty($note = $booking->getMeta('notes')) || trim($note) === 'Anmerkungen des Benutzers:')  && empty($ccNote)) ? '' : ' cc-note';
                 }
             } 
-            return $view->calendarCellLink($cellLabel, $view->url('square', [], $cellLinkParams), 'cc-free cc-free-partially');
+            return $view->calendarCellLink($cellLabel, $view->url('square', [], $cellLinkParams), 'cc-free cc-free-partially' . $ccNote);
         }
     }
 }

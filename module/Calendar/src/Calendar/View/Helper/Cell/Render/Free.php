@@ -20,14 +20,16 @@ class Free extends AbstractHelper
             if ($userBooking) {
                 $cellLabel = $view->t('Your Booking');                
                 $cellGroup = ' cc-group-' . $userBooking->need('bid');
+                $ccNote = (empty($note = $userBooking->getMeta('notes')) || trim($note) === 'Anmerkungen des Benutzers:') ? '' : ' cc-note';
                 if (count($reservations) > 0 && ($square->getMeta('public_names', 'false') == 'true' || $square->getMeta('private_names', 'false') == 'true' && $user)) {
                     foreach ($reservations as $reservation) {
                        $booking = $reservation->needExtra('booking'); 
+                       $ccNote = ((empty($note = $booking->getMeta('notes')) || trim($note) === 'Anmerkungen des Benutzers:')  && empty($ccNote)) ? '' : ' cc-note';
                        $cellLabel .= ($booking->get('uid') != $user->get('uid')) ? ' * ' . $booking->needExtra('user')->need('alias') : '';
                     }
                 }
 
-                return $view->calendarCellLink($cellLabel, $view->url('square', [], $cellLinkParams), 'cc-own' . $cellGroup);
+                return $view->calendarCellLink($cellLabel, $view->url('square', [], $cellLinkParams), 'cc-own' . $cellGroup . $ccNote);
             } else {
                 return $view->calendarCellRenderFreeForAll($reservations, $cellLinkParams, $square, $user);
 //                return $view->calendarCellLink($labelFree, $view->url('square', [], $cellLinkParams), 'cc-free');
