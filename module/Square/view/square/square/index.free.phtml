@@ -7,6 +7,8 @@ echo sprintf('<p><span class="green">' . $this->t('This %s is still free.') . '<
 
 echo $this->squareCapacityInfo($square, $this->quantity);
 
+echo $this->squareBookingInfo($square, $bookings);
+
 if ($square->need('status') == 'readonly') {
     if ($square->getMeta('readonly.message')) {
         echo '<p class="gray">' . $square->getMeta('readonly.message') .'</p>';

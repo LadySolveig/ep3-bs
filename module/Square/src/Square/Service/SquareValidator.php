@@ -24,7 +24,7 @@ class SquareValidator extends AbstractService
     protected $eventManager;
     protected $squareManager;
     protected $optionManager;
-	protected $userManager;						   
+    protected $userManager;						   
     protected $user;
 
     public function __construct(BookingManager $bookingManager, ReservationManager $reservationManager,

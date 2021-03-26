@@ -84,6 +84,7 @@ return array(
     'view_helpers' => array(
         'invokables' => array(
             'SquareCapacityInfo' => 'Square\View\Helper\CapacityInfo',
+            'SquareBookingInfo' => 'Square\View\Helper\BookingInfo',
             'SquareDateFormat' => 'Square\View\Helper\DateFormat',
         ),
 
