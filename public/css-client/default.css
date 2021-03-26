@@ -62,10 +62,58 @@ a:link, a:visited { color: #334F6A; }
     background-image: url(../imgs/icons/user.png);
 }
 
+a.cc-free-partially {
+    text-decoration: none;
+    background-color: #ffffcc;
+    
+}
+
+a.cc-free:link.cc-free-partially, a.cc-free:visited.cc-free-partially {
+    background-color: #ffffcc;
+}
+
+.flex-userpanel {
+    display:flex;
+    flex-wrap:wrap;
+    /*justify-content:flex-end;*/
+    align-items: baseline;
+    max-width:100%;
+}
+
+.flex-userpanel a.default-button {
+    margin-right: 5px;
+    margin-bottom: 8px;
+}
+
 /* Print */
 
 @media print
 {
     
+}
+
+@media screen and (max-width: 360px)
+{
+    #calendar {
+        padding: 16px 2px;;
+    }
+    
+    .calendar-time-col {
+        max-width: 86px !important;
+    }
+    
+    .calendar-time-table {
+        max-width: 85px !important;
+    }
+    
+    .calendar-table .calendar-date-col {
+        padding-left: 2px;
+        max-width: 265px !important;
+    }
+    
+    body {
+        padding: 16px 5px;
+        min-width: 0;        
+    }
 }
 
