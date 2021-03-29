@@ -15,9 +15,31 @@ class CellLogic extends AbstractHelper
 
     protected function determineCell($walkingDate, $walkingTime, $timeBlock, $now, $square, $user, $reservationsForCol, $eventsForCol)
     {
-        $view = $this->getView();
-
-        if ($square->get('min_range_book', 0) == 0) {
+        $view = $this->getView();    
+        
+        $reservationsForCell = $view->calendarReservationsForCell($reservationsForCol, $square);
+        
+        $userBooking = null; 
+        
+        if ($user && count($reservationsForCell) > 0) {
+            foreach ($reservationsForCell as $reservation) {
+                $booking = $reservation->needExtra('booking');
+                if ($user->need('uid') == $booking->need('uid')) {
+                    $userBooking = $booking;
+                    break;
+                }                
+            }
+        }
+        
+        if($userBooking){
+            $walkingDateOnly = clone $walkingDate;
+            $todayDateOnly =  clone $now;
+        
+            $walkingDateOnlyPast = $walkingDateOnly->setTime(12, 0, 0)->getTimestamp() - $todayDateOnly->setTime(12, 0, 0)->getTimestamp();
+            
+            $isOver = $walkingDateOnlyPast < intval(0);
+        } elseif ($square->get('min_range_book', 0) == 0) { 
+            
             $walkingDatePast = $walkingDate->getTimestamp() - $now->getTimestamp();
 
             if ($walkingDatePast < 0) {
@@ -29,8 +51,10 @@ class CellLogic extends AbstractHelper
             $isOver = $walkingDate <= $now;
         }
 
-        if ($isOver) {
-            if (! ($user && $user->can('calendar.see-past'))) {
+        if ($isOver) {   
+            if ($user && $userBooking) {
+                return $view->calendarCell($this->view->t('Past') . ' - ' . $view->t('Your Booking'), 'cc-over cc-own');
+            } elseif (! ($user && $user->can('calendar.see-past'))) {
                 return $view->calendarCell($this->view->t('Past'), 'cc-over');
             }
         }
@@ -74,8 +98,7 @@ class CellLogic extends AbstractHelper
         if ($walkingTime < $square->needExtra('time_start_sec') || $walkingTime >= $square->needExtra('time_end_sec')) {
             return $view->calendarCell($this->view->t('Closed'), 'cc-over');
         }
-
-        $reservationsForCell = $view->calendarReservationsForCell($reservationsForCol, $square);
+        
         $eventsForCell = $view->calendarEventsForCell($eventsForCol, $square);
 
         $timeBlockSplit = round($timeBlock / 2);

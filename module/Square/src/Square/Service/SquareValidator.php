@@ -123,8 +123,10 @@ class SquareValidator extends AbstractService
         $dateMax->modify('+' . $square->get('range_book', 0) . ' sec');
 
         if ($timeStart < $dateMin) {
-            if (! ($this->user && $this->user->can('calendar.see-past'))) {
-
+            // Allow all Users to see the entire day
+            if (! ($this->user && ($dateEnd->format('Y-m-d') == $dateMin->format('Y-m-d') || $this->user->can('calendar.see-past')))) {
+//            if (! ($this->user && $this->user->can('calendar.see-past'))) {
+                                
                 // Allow assist users with calendar.see-data privilege to see the entire day
                 if (! ($this->user && $this->user->can('calendar.see-data') && $dateEnd->format('Y-m-d') == $dateMin->format('Y-m-d'))) {
                     throw new RuntimeException('The passed time is already over');

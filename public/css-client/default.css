@@ -88,17 +88,21 @@ a.cc-free:link.cc-free-partially, a.cc-free:visited.cc-free-partially {
 .cc-note .cc-label::after {    
   background-image: url("../imgs-client/icons/info-sign.svg");
   background-repeat: no-repeat;
-    background-size: 12px 12px;
+    background-size: 10px 10px;
     display: inline-block;
-    margin-right: 5px;
+    margin-left: 5px;
     float: right;
-    width: 12px; 
-    height: 12px;
+    width: 10px; 
+    height: 10px;
     content:"";
 }
 
 .cc-own.cc-note .cc-label::after {    
     background-image: url("../imgs-client/icons/info-signw.svg");
+}
+
+.cc-over.cc-own {
+    background-color: #d7f79c;
 }
 
 /* Print */
