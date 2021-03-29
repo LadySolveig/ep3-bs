@@ -413,12 +413,19 @@ class SquareValidator extends AbstractService
             return true;
         }
 
-        $reservationStartDate = new DateTime($reservation->need('date') . ' ' . $reservation->need('time_start'));
+//        $reservationStartDate = new DateTime($reservation->need('date'));
+        $reservationStartDate = ($squareCancelRange > 36) ? new DateTime($reservation->need('date') . ' ' . $reservation->need('time_start')) : new DateTime($reservation->need('date'));
 
         $reservationCancelDate = new DateTime();
-        $reservationCancelDate->modify('+' . $squareCancelRange . ' sec');
+        if($squareCancelRange > 36) {
+            $reservationCancelDate->modify('+' . $squareCancelRange . ' sec');
+        } else {
+            $reservationCancelDate->setTime(0, 0, 0);
+        }
+//        $reservationCancelDate->modify('+' . $squareCancelRange . ' sec');
+        
 
-        if ($reservationStartDate > $reservationCancelDate) {
+        if ($reservationStartDate > $reservationCancelDate || ($reservationStartDate == $reservationCancelDate && intval($squareCancelRange) == 36)) {
             return true;
         } else {
             return false;
