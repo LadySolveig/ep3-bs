@@ -79,6 +79,33 @@ class TimeBlockChoice extends AbstractHelper
         $view = $this->getView();
         $html = '';
 
+        // Startzeit
+        $html .= '<select id="sb-alternate-times-start" style="display: none; margin-right: 16px;">';
+        
+        $walkingDateTimeStart = clone $dateTimeStart;
+        $walkingDateTimeStartParts = explode(':', $square->need('time_start'));
+        $walkingDateTimeStart->setTime($walkingDateTimeStartParts[0],$walkingDateTimeStartParts[1]);
+        $rangeDateTimeEnd = clone $dateTimeStart;
+        $rangeDateTimeEnd->setTime($squareTimeEndParts[0],$squareTimeEndParts[1]);
+        $rangeDateTimeEnd->modify("-{$bookable} sec");
+        
+        while ($walkingDateTimeStart <= $rangeDateTimeEnd) {
+            
+            $quantity = $this->countReservationsInRange($walkingDateTimeStart, $bookable, $square);
+            
+            $disabledOption = (($quantity && ! $capacityHeterogenic) || ($capacity <= $quantity)) ? ' disabled="disabled" style="text-decoration: line-through;"' : ''; 
+                    
+            $selectedOption = ($walkingDateTimeStart == $dateTimeStart) ? 'selected="selected"' : '';
+            
+            $html .= sprintf('<option value="%s" %s>%s</option>',
+                    $walkingDateTimeStart->format('H:i'), $selectedOption . $disabledOption, $walkingDateTimeStart->format('H:i'));
+            $walkingDateTimeStart->modify('+' . $bookable . ' sec');
+        }
+        
+        $html .= '</select>';
+        
+        $html .= '<span style="margin-right: 16px;">bis:</span>';
+        
         $html .= '<select id="sb-alternate-times" style="display: none; margin-right: 16px;">';
 
         $walkingTimeStartParts = explode(':', $dateTimeStart->format('H:i'));
@@ -129,11 +156,15 @@ class TimeBlockChoice extends AbstractHelper
 
             $value = $walkingDateTime->format('H:i');
 
+//            $html .= sprintf('<option value="%s" %s>%s</option>',
+//                $value, $attr, $view->timeRange($dateTimeStart, $walkingDateTime, '%s to %s'));
             $html .= sprintf('<option value="%s" %s>%s</option>',
-                $value, $attr, $view->timeRange($dateTimeStart, $walkingDateTime, '%s to %s'));
+                $value, $attr, $walkingDateTime->format('H:i'));
         }
 
         $html .= '</select>';
+        
+        $html .= '<span style="margin-right: 16px;">Uhr</span>';
 
         if ($walkingIndex <= 1) {
             return null;
@@ -223,6 +254,41 @@ class TimeBlockChoice extends AbstractHelper
         $html .= '</select>';
 
         return $html;
+    }
+    
+    private function countReservationsInRange($startDatetime,$bookableRangeInSeconds, $square) {
+        
+        $endDatetime = clone $startDatetime;
+        $endDatetime->modify ("+{$bookableRangeInSeconds} seconds");
+        
+        $reservations = $this->reservationManager->getInRange($startDatetime,$endDatetime);
+        
+        $bookings = $this->bookingManager->getByReservations($reservations);
+        
+        $this->reservationManager->getSecondsPerDay($reservations);
+        
+        $quantity = 0;
+        
+        $startTimeParts = explode(':', $startDatetime->format('H:i'));
+        $startTimeInSeconds = $startTimeParts[0] * 3600 + $startTimeParts[1] * 60;
+        
+        $endTimeParts = explode(':', $endDatetime->format('H:i'));
+        $endTimeInSeconds = $endTimeParts[0] * 3600 + $endTimeParts[1] * 60;
+            
+        foreach ($reservations as $reservation) {
+            $booking = $reservation->needExtra('booking');            
+
+            if ($booking->need('status') != 'cancelled' && $booking->need('visibility') == 'public') {
+                if ($booking->need('sid') == $square->need('sid')) {
+                    if ($reservation->needExtra('time_start_sec') <= $startTimeInSeconds &&
+                        $reservation->needExtra('time_end_sec') >= $endTimeInSeconds) {
+                        $quantity += $booking->need('quantity');
+                    }
+                }
+            }
+        }
+        
+        return $quantity;
     }
 
 }

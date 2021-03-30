@@ -26,6 +26,29 @@
 
             at.show();
         }
+        
+        /* Alternate time start choice */
+
+        var ats = $("#sb-alternate-times-start");        
+
+        if (ats.length) {
+            var buttonReload = $("#sb-reload-button");
+
+            ats.on("change", function() {
+                var hrefBook = buttonBook.attr("href");
+                var hrefReload = buttonReload.attr("href");
+
+                if (ats.val()) {
+                    var choice = ats.val();                    
+
+                    buttonBook.attr("href", hrefBook.replace(/\&ts\=[0-9][0-9]:[0-9][0-9]/, "&ts=" + choice).replace(/\&te\=[0-9][0-9]:[0-9][0-9]/, "&te="));
+                    buttonReload.attr("href", hrefReload.replace(/\&ts\=[0-9][0-9]:[0-9][0-9]/, "&ts=" + choice).replace(/\&te\=[0-9][0-9]:[0-9][0-9]/, "&te="));
+                    buttonReload.click();
+                }
+            });
+
+            ats.show();
+        }
 
         /* Alternate date choice */
 

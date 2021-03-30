@@ -105,6 +105,11 @@ a.cc-free:link.cc-free-partially, a.cc-free:visited.cc-free-partially {
     background-color: #d7f79c;
 }
 
+select option[disabled] {
+    text-decoration: line-through;
+    font-style: italic;
+}
+
 /* Print */
 
 @media print
