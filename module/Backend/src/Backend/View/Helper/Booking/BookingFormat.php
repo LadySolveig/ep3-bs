@@ -34,20 +34,28 @@ class BookingFormat extends AbstractHelper
 
         $html .= sprintf('<tr %s>', $attr);
 
-        $html .= sprintf('<td class="status-col right-text">%s</td>',
+        $html .= sprintf('<td class="status-col right-text no-print">%s</td>',
             $view->t($booking->getStatus()));
 
-        $html .= sprintf('<td>%s</td>',
+        $html .= sprintf('<td class="no-print">%s</td>',
             $booking->need('bid'));
 
         if ($booking->getExtra('user')) {
             $userName = $booking->getExtra('user')->get('alias');
+            $userNameFull = $booking->getExtra('user')->getMeta('lastname') . ', ' . $booking->getExtra('user')->getMeta('firstname');
+            $userEMail = $booking->getExtra('user')->get('email');
         } else {
             $userName = $booking->need('uid');
         }
 
-        $html .= sprintf('<td><b>%s</b></td>',
+        $html .= sprintf('<td class="no-print"><b>%s</b></td>',
             $userName);
+        
+        $html .= sprintf('<td class="print-only"><b>%s</b></td>',
+            $userNameFull);
+        
+        $html .= sprintf('<td class="print-only">%s</td>',
+            $userEMail);
 
         /* Date and time col */
 
@@ -57,7 +65,7 @@ class BookingFormat extends AbstractHelper
         $fullDateParts = explode(', ', $fullDate);
 
         $html .= sprintf('<td>%s</td>',
-            $fullDateParts[0]);
+        substr($fullDateParts[0],0,2));
 
         $html .= sprintf('<td>%s</td>',
             $view->dateFormat($date, \IntlDateFormatter::MEDIUM));
@@ -90,7 +98,7 @@ class BookingFormat extends AbstractHelper
             $notes = '-';
         }
 
-        $html .= sprintf('<td class="notes-col">%s</td>',
+        $html .= sprintf('<td class="no-print notes-col">%s</td>',
             $notes);
 
         /* Actions col */

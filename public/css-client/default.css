@@ -114,7 +114,28 @@ select option[disabled] {
 
 @media print
 {
+    .no-print {
+        display: none !important;
+    } 
     
+    table.bordered-table {
+        border-collapse: separate;
+    }
+    
+    .bordered-table th {
+        text-align: left;
+    }
+    
+    table {
+        width: 100%;
+    }
+}
+
+@media screen
+{
+    .print-only {
+        display: none;
+    } 
 }
 
 @media screen and (max-width: 360px)

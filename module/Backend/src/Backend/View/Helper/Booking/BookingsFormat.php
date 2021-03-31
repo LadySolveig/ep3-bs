@@ -15,14 +15,15 @@ class BookingsFormat extends AbstractHelper
         $html .= '<table class="bordered-table">';
 
         $html .= '<tr class="gray">';
-        $html .= '<th>&nbsp;</th>';
-        $html .= '<th>' . $view->t('No.') . '</th>';
+        $html .= '<th class="no-print">&nbsp;</th>';
+        $html .= '<th class="no-print">' . $view->t('No.') . '</th>';
         $html .= '<th>' . $view->t('Name') . '</th>';
+        $html .= '<th class="print-only">' . $view->t('Contact') . '</th>';
         $html .= '<th>' . $view->t('Day') . '</th>';
         $html .= '<th>' . $view->t('Date') . '</th>';
         $html .= '<th>' . $view->t('Time') . '</th>';
         $html .= '<th>' . $view->option('subject.square.type') . '</th>';
-        $html .= '<th class="notes-col">' . $view->t('Notes') . '</th>';
+        $html .= '<th class="no-print notes-col">' . $view->t('Notes') . '</th>';
         $html .= '<th class="no-print">&nbsp;</th>';
         $html .= '</tr>';
 

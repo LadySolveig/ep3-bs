@@ -14,17 +14,22 @@ $this->setup(array(
 ?>
 
 <div>
-    <h1><?= $this->t('Booking-Administration') ?></h1>
+    <h1 class="no-print"><?= $this->t('Booking-Administration') ?></h1>
+    
+    <h1 class="print-only"><?= sprintf('%s - %s - %s', $this->t('Bookings'),$this->option('client.name.full'),$this->option('service.name.full')) ?></h1>
+    
+    <div class="separator-small no-print"></div>
 
-    <div class="separator-small"></div>
+    <p class="no-print"><?= $this->t('Here you can create, edit or delete the bookings of your system.') ?></p>
 
-    <p><?= $this->t('Here you can create, edit or delete the bookings of your system.') ?></p>
-
-    <div class="separator separator-line"></div>
+    <div class="separator separator-line no-print"></div>
 
     <?= $this->partial('backend/booking/index.datepicker.phtml', ['dateStart' => $this->dateStart, 'dateEnd' => $this->dateEnd, 'search' => $this->search]) ?>
+    
+    <h2 class="print-only"><?=sprintf('Zeitraum: %s %s %s',
+            $this->dateFormat($this->dateStart, \IntlDateFormatter::MEDIUM), $this->t('to'), $this->dateFormat($this->dateEnd, \IntlDateFormatter::MEDIUM)) ?></h2>
 
-    <div class="separator separator-line"></div>
+    <div class="separator separator-line no-print"></div>
 
     <div class="centered-text" style="padding: 16px 0px 16px 0px;">
 
