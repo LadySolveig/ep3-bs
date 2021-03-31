@@ -80,7 +80,7 @@ class TimeBlockChoice extends AbstractHelper
         $html = '';
 
         // Startzeit
-        $html .= '<select id="sb-alternate-times-start" style="display: none; margin-right: 16px;">';
+        $html .= '<select id="sb-alternate-times-start" style="display: none; margin-right: 8px;">';
         
         $walkingDateTimeStart = clone $dateTimeStart;
         $walkingDateTimeStartParts = explode(':', $square->need('time_start'));
@@ -104,9 +104,9 @@ class TimeBlockChoice extends AbstractHelper
         
         $html .= '</select>';
         
-        $html .= '<span style="margin-right: 16px;">bis:</span>';
+        $html .= '<span style="margin-right: 8px;">bis:</span>';
         
-        $html .= '<select id="sb-alternate-times" style="display: none; margin-right: 16px;">';
+        $html .= '<select id="sb-alternate-times" style="display: none; margin-right: 8px;">';
 
         $walkingTimeStartParts = explode(':', $dateTimeStart->format('H:i'));
         $walkingTimeStart = $walkingTimeStartParts[0] * 3600 + $walkingTimeStartParts[1] * 60;

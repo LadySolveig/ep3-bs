@@ -18,6 +18,13 @@ $this->setup(array(
 ?>
 
 <div class="padded">
+    <div class="centered-text" style="margin-bottom: 12px;">
+        <p class="large-text"><?= $squareType . ' ' . $this->t($square->need('name')) ?></p>
+
+        <?= $this->squareDateFormat($this->dateStart, $this->dateEnd) ?>
+
+        <?= sprintf('<p><span class="green">' . $this->t('You are going to book this %s.') . '</span></p>', $squareType) ?>
+    </div>
 
     <form method="post" action="<?= $this->url ?>">
 
@@ -73,23 +80,23 @@ $this->setup(array(
 
             <textarea name="bf-user-notes" placeholder="Optionale Anmerkungen" style="width: 100%; height: 3.1rem"></textarea>
 
-            <div class="separator separator-line"></div>
+            <!--<div class="separator separator-line"></div>-->
 
         <?php endif; ?>
 
         <div class="centered-text small-text gray" style="margin-bottom: 12px;">
 	        <?php
 
-	        $cancelRange = $square->need('range_cancel');
-
-	        if ($cancelRange) {
-
-		        printf($this->t('Your booking will be binding, however, you can cancel it up to %s before it takes place.'),
-                    $this->prettyTime($cancelRange));
-	        } else {
-
-		        echo $this->t('Your booking will be binding.');
-	        }
+//	        $cancelRange = $square->need('range_cancel');
+//
+//	        if ($cancelRange) {
+//
+//		        printf($this->t('Your booking will be binding, however, you can cancel it up to %s before it takes place.'),
+//                    $this->prettyTime($cancelRange));
+//	        } else {
+//
+//		        echo $this->t('Your booking will be binding.');
+//	        }
 
 	        ?>
         </div>

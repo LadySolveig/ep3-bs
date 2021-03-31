@@ -22,11 +22,11 @@ if ($square->need('status') == 'readonly') {
         echo $this->ajaxAwareScript('js/controller/square/index.free.min.js');
         echo $this->squareTimeBlockChoice($this->dateStart, $this->dateEnd, $square);
 
-        if ($square->need('capacity') > 1 || $this->products) {
-            $route = 'square/booking/customization';
-        } else {
+//        if ($square->need('capacity') > 1 || $this->products) {
+//            $route = 'square/booking/customization';
+//        } else {
             $route = 'square/booking/confirmation';
-        }
+//        }
 
         $url = $this->url($route, [], ['query' => [
             'ds' => $this->dateStart->format('Y-m-d'),
@@ -35,7 +35,7 @@ if ($square->need('status') == 'readonly') {
             'te' => $this->dateEnd->format('H:i'),
             's' => $square->need('sid')]]);
 
-        echo sprintf('<a href="%s" id="sb-button" class="default-button squarebox-internal-link"><span class="symbolic symbolic-plus">%s</span></a>',
+        echo sprintf('<a href="%s" id="sb-button" class="default-button squarebox-internal-link" style="margin-top:8px;><span class="symbolic symbolic-plus">%s</span></a>',
             $url, $this->t('Book now'));
 
         echo '</p>';
